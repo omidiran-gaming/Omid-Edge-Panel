@@ -1,0 +1,79 @@
+name: Extract Project ZIP
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract project ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ZIP_FILE="Omid-Edge-Panel-Stage16-Clean-Source.zip"
+
+          if [ ! -f "$ZIP_FILE" ]; then
+            echo "ERROR: ZIP file not found: $ZIP_FILE"
+            exit 1
+          fi
+
+          mkdir -p extracted
+
+          python3 - "$ZIP_FILE" <<'PY'
+          import sys
+          import zipfile
+          from pathlib import Path
+
+          archive = Path(sys.argv[1])
+          destination = Path("extracted")
+
+          with zipfile.ZipFile(archive) as z:
+              for item in z.infolist():
+                  path = Path(item.filename)
+
+                  if path.is_absolute() or ".." in path.parts:
+                      raise SystemExit(f"Unsafe ZIP path: {item.filename}")
+
+              z.extractall(destination)
+
+          print(f"Extracted {archive} into {destination}")
+          PY
+
+      - name: Copy extracted files including hidden files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          shopt -s dotglob
+          for item in extracted/*; do
+            [ -e "$item" ] || continue
+            cp -a "$item" .
+          done
+
+          rm -rf extracted
+
+      - name: Commit extracted files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Extract Stage 16 project files"
+            git push
+          fi
