@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="noindex, nofollow" name="robots"/>
+<title>Omid Edge Panel | Sign In</title>
+<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box
+		}
+
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+			overflow: hidden
+		}
+
+		/* 通用动画 */
+		@keyframes blurOverlayAppear {
+			0% {
+				opacity: 0;
+				-webkit-backdrop-filter: blur(0px);
+				backdrop-filter: blur(0px);
+			}
+
+			100% {
+				opacity: 1;
+				-webkit-backdrop-filter: blur(12px);
+				backdrop-filter: blur(12px);
+			}
+		}
+
+		@keyframes containerAppear {
+			0% {
+				opacity: 0;
+				transform: translateY(30px) scale(0.9)
+			}
+
+			100% {
+				opacity: 1;
+				transform: translateY(0) scale(1)
+			}
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0
+			}
+
+			to {
+				opacity: 1
+			}
+		}
+
+		@keyframes shake {
+
+			0%,
+			100% {
+				transform: translateX(0)
+			}
+
+			10%,
+			30%,
+			50%,
+			70%,
+			90% {
+				transform: translateX(-5px)
+			}
+
+			20%,
+			40%,
+			60%,
+			80% {
+				transform: translateX(5px)
+			}
+		}
+
+		@keyframes gradientShift {
+			0% {
+				background-position: 0 50%
+			}
+
+			50% {
+				background-position: 100% 50%
+			}
+
+			100% {
+				background-position: 0 50%
+			}
+		}
+
+		/* 背景和遮罩层 */
+		#background-iframe {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			border: 0;
+			z-index: -3 !important
+		}
+
+		#blur-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0, rgba(118, 75, 162, 0.15) 100%);
+			-webkit-backdrop-filter: blur(12px);
+			backdrop-filter: blur(12px);
+			z-index: -2 !important;
+			animation: blurOverlayAppear 1.5s ease-out forwards .3s;
+			pointer-events: none;
+			opacity: 0
+		}
+
+		/* 通用容器包装器 */
+		.page-wrapper {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 1 !important;
+			padding: 20px;
+			overflow-y: auto
+		}
+
+		/* 通用卡片容器 */
+		.card-container {
+			background: rgba(255, 255, 255, 0.95);
+			-webkit-backdrop-filter: blur(20px);
+			backdrop-filter: blur(20px);
+			padding: 50px 40px;
+			border-radius: 24px;
+			box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+			width: 100%;
+			animation: containerAppear 1s ease-out .8s backwards;
+			position: relative;
+			overflow: hidden
+		}
+
+		.card-container::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 4px;
+			background: linear-gradient(90deg, #faab41 0, #f6821f 50%, #faab41 100%);
+			background-size: 200% 100%;
+			animation: gradientShift 3s ease infinite
+		}
+
+		/* 页面标题和图标 */
+		.page-header {
+			margin-bottom: 35px;
+			text-align: center
+		}
+
+		.page-icon {
+			width: 70px;
+			height: 70px;
+			margin: 0 auto 20px;
+			background: linear-gradient(135deg, #faab41 0, #f6821f 100%);
+			border-radius: 20px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+			animation: fadeIn .8s ease-out 1s backwards
+		}
+
+		.page-icon svg {
+			width: 36px;
+			height: 36px;
+			fill: white
+		}
+
+		.page-title {
+			font-size: 32px;
+			font-weight: 700;
+			background: linear-gradient(135deg, #faab41 0, #f6821f 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+			margin: 0 0 12px;
+			line-height: 1.2;
+			letter-spacing: -0.5px
+		}
+
+		/* 表单样式 */
+		.page-form {
+			display: flex;
+			flex-direction: column;
+			margin-top: 35px
+		}
+
+		.form-group {
+			margin-bottom: 24px;
+			text-align: left;
+			position: relative
+		}
+
+		.input-wrapper {
+			position: relative
+		}
+
+		.input-icon {
+			position: absolute;
+			left: 16px;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 20px;
+			height: 20px;
+			opacity: .4;
+			pointer-events: none;
+			transition: opacity .3s ease
+		}
+
+		.form-group input {
+			width: 100%;
+			padding: 16px;
+			border: 2px solid #e5e7eb !important;
+			border-radius: 12px;
+			font-size: 16px;
+			color: #1f2937 !important;
+			background-color: #fff !important;
+			box-sizing: border-box;
+			transition: all .3s ease;
+			-webkit-appearance: none;
+			appearance: none;
+			font-family: inherit
+		}
+
+		.form-group input.with-icon {
+			padding-left: 48px
+		}
+
+		.form-group input:focus {
+			outline: 0 !important;
+			border-color: #faab41 !important;
+			box-shadow: 0 0 0 4px rgba(250, 171, 65, 0.1) !important
+		}
+
+		.form-group input:focus+.input-icon {
+			opacity: .7
+		}
+
+		.form-group input:disabled {
+			background-color: #f3f4f6 !important;
+			color: #9ca3af !important;
+			cursor: not-allowed;
+			opacity: 1
+		}
+
+		.form-group input[readonly] {
+			background-color: #f9fafb !important;
+			color: #6b7280 !important
+		}
+
+		/* 按钮样式 */
+		.btn {
+			padding: 16px 20px;
+			border: 0;
+			border-radius: 12px;
+			font-size: 16px;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all .3s ease;
+			box-sizing: border-box;
+			-webkit-appearance: none;
+			appearance: none;
+			letter-spacing: .5px;
+			position: relative;
+			overflow: hidden
+		}
+
+		.btn-primary {
+			background: linear-gradient(135deg, #faab41 0, #f6821f 100%);
+			color: #fff;
+			box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4)
+		}
+
+		.btn-primary::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+			transition: left .5s ease
+		}
+
+		.btn-primary:hover::before {
+			left: 100%
+		}
+
+		.btn-primary:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5)
+		}
+
+		.btn-primary:active {
+			transform: translateY(0);
+			box-shadow: 0 2px 10px rgba(102, 126, 234, 0.4)
+		}
+
+		.btn:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+			pointer-events: none
+		}
+
+		/* 页脚提示 */
+		.footer-hint {
+			margin-top: 30px;
+			font-size: 13px;
+			color: #9ca3af;
+			animation: fadeIn 1s ease-out 1.5s backwards;
+			text-align: center
+		}
+
+		.footer-hint a {
+			color: #faab41;
+			text-decoration: none;
+			font-weight: 500;
+			transition: color .3s ease
+		}
+
+		.footer-hint a:hover {
+			color: #f6821f
+		}
+
+		/* 模态框 */
+		.modal-overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 2000000000;
+			justify-content: center;
+			align-items: center
+		}
+
+		.modal-overlay.show {
+			display: flex
+		}
+
+		.modal {
+			background: #fff;
+			border-radius: 16px;
+			padding: 30px;
+			max-width: 400px;
+			width: 90%;
+			box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+			text-align: center;
+			z-index: 2000000001;
+			position: relative
+		}
+
+		.modal-close {
+			position: absolute;
+			top: 15px;
+			right: 15px;
+			background: none;
+			border: none;
+			font-size: 24px;
+			cursor: pointer;
+			color: #9ca3af
+		}
+
+		.modal-close:hover {
+			color: #1f2937
+		}
+
+		/* 响应式设计 - 平板 */
+		@media(max-width:768px) {
+			.page-wrapper {
+				padding: 20px 16px;
+				padding-top: 20px;
+				padding-bottom: 20px;
+				justify-content: flex-start;
+				align-items: center
+			}
+
+			.card-container {
+				padding: 40px 28px;
+				border-radius: 20px;
+				max-width: 100%;
+				margin-top: auto;
+				margin-bottom: auto
+			}
+
+			.page-icon {
+				width: 60px;
+				height: 60px;
+				border-radius: 16px;
+				margin-bottom: 16px
+			}
+
+			.page-icon svg {
+				width: 30px;
+				height: 30px
+			}
+
+			.page-form {
+				margin-top: 28px
+			}
+
+			.form-group {
+				margin-bottom: 20px
+			}
+
+			.form-group input {
+				padding: 14px;
+				font-size: 16px;
+				border-radius: 10px
+			}
+
+			.form-group input.with-icon {
+				padding-left: 44px
+			}
+
+			.input-icon {
+				left: 14px;
+				width: 18px;
+				height: 18px
+			}
+
+			.btn {
+				padding: 15px 20px;
+				font-size: 15px;
+				border-radius: 10px
+			}
+
+			.footer-hint {
+				margin-top: 24px;
+				font-size: 12px
+			}
+		}
+
+		/* 响应式设计 - 手机 */
+		@media(max-width:480px) {
+			.page-wrapper {
+				padding: 12px;
+				justify-content: flex-start;
+				align-items: center
+			}
+
+			.card-container {
+				padding: 35px 24px;
+				border-radius: 18px;
+				margin-top: auto;
+				margin-bottom: auto
+			}
+
+			.page-icon {
+				width: 55px;
+				height: 55px;
+				border-radius: 14px
+			}
+
+			.page-icon svg {
+				width: 28px;
+				height: 28px
+			}
+
+			.page-title {
+				font-size: 24px
+			}
+		}
+
+		/* 响应式设计 - 横屏 */
+		@media(max-height:600px) and (orientation:landscape) {
+			.page-wrapper {
+				padding: 20px;
+				justify-content: flex-start;
+				align-items: center
+			}
+
+			.card-container {
+				padding: 30px 35px;
+				margin-top: auto;
+				margin-bottom: auto
+			}
+
+			.page-icon {
+				width: 50px;
+				height: 50px;
+				margin-bottom: 12px
+			}
+
+			.page-icon svg {
+				width: 26px;
+				height: 26px
+			}
+
+			.page-title {
+				font-size: 22px;
+				margin-bottom: 8px
+			}
+
+			.page-form {
+				margin-top: 20px
+			}
+
+			.form-group {
+				margin-bottom: 16px
+			}
+
+			.footer-hint {
+				margin-top: 16px
+			}
+		}
+
+		.card-container {
+			max-width: 440px;
+			text-align: center
+		}
+
+		/* 错误消息样式 */
+		.login-error {
+			margin-top: 24px;
+			padding: 14px 18px;
+			border-radius: 12px;
+			background: linear-gradient(135deg, #ef4444 0, #dc2626 100%);
+			color: #fff;
+			font-size: 14px;
+			font-weight: 500;
+			line-height: 1.5;
+			box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+			animation: errorShake 0.5s ease-in-out, fadeInError 0.3s ease-out;
+			display: flex;
+			align-items: center;
+			gap: 10px
+		}
+
+		.login-error::before {
+			content: '⚠️';
+			flex-shrink: 0;
+			font-size: 16px
+		}
+
+		@keyframes errorShake {
+
+			0%,
+			100% {
+				transform: translateX(0)
+			}
+
+			10%,
+			30%,
+			50%,
+			70%,
+			90% {
+				transform: translateX(-5px)
+			}
+
+			20%,
+			40%,
+			60%,
+			80% {
+				transform: translateX(5px)
+			}
+		}
+
+		@keyframes fadeInError {
+			from {
+				opacity: 0;
+				transform: translateY(-10px)
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0)
+			}
+		}
+
+		/* 加载状态 */
+		.btn-loading {
+			position: relative;
+			color: transparent !important
+		}
+
+		.btn-loading::after {
+			content: '';
+			position: absolute;
+			width: 14px;
+			height: 14px;
+			top: 50%;
+			left: 50%;
+			margin-left: -7px;
+			margin-top: -7px;
+			border: 2px solid rgba(255, 255, 255, 0.3);
+			border-radius: 50%;
+			border-top-color: white;
+			animation: spin 0.8s linear infinite
+		}
+
+		@keyframes spin {
+			to {
+				transform: rotate(360deg)
+			}
+		}
+
+		/* 按钮全宽样式 */
+		.btn-full-width {
+			width: 100%;
+		}
+
+		/* 错误消息隐藏状态 */
+		.login-error-hidden {
+			display: none;
+		}
+
+		/* 模态框按钮容器 */
+		.modal-button-container {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			gap: 12px;
+			margin-top: 10px;
+			width: 100%;
+		}
+
+		@media (max-width: 480px) {
+			.modal-button-container {
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.modal-button-container button {
+				width: 100%;
+				margin: 5px 0 !important;
+			}
+		}
+
+		/* 科技感按钮倒计时及光效 */
+		.btn-tech-upgrade {
+			position: relative;
+			overflow: hidden;
+			animation: btnPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+		}
+
+		.btn-countdown-line {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			height: 3px;
+			background: #fff;
+			width: 100%;
+			border-radius: 0 0 14px 14px;
+			transform-origin: left;
+			animation: countdownProgress 5s linear forwards;
+			box-shadow: 0 0 8px #fff, 0 0 15px #f6821f;
+			z-index: 2;
+		}
+
+		/* 扫描影效 */
+		.btn-tech-upgrade::after {
+			content: '';
+			position: absolute;
+			top: -50%;
+			left: -60%;
+			width: 20%;
+			height: 200%;
+			background: rgba(255, 255, 255, 0.2);
+			transform: rotate(30deg);
+			animation: techScan 3s infinite;
+			pointer-events: none;
+			z-index: 1;
+		}
+
+		@keyframes countdownProgress {
+			from {
+				transform: scaleX(1);
+			}
+
+			to {
+				transform: scaleX(0);
+			}
+		}
+
+		@keyframes techScan {
+			0% {
+				left: -60%;
+			}
+
+			30%,
+			100% {
+				left: 150%;
+			}
+		}
+
+		@keyframes btnPulse {
+
+			0%,
+			100% {
+				box-shadow: 0 8px 16px rgba(246, 130, 31, 0.2);
+			}
+
+			50% {
+				box-shadow: 0 8px 25px rgba(246, 130, 31, 0.5);
+			}
+		}
+	</style>
+
+<style id="omid-login-brand-theme">
+:root { color-scheme: dark; }
+body { background: #070b19 !important; color: #f1f5ff; }
+#blur-overlay { background: radial-gradient(ellipse at 15% 5%, rgba(91,33,182,.45), transparent 45%), linear-gradient(135deg, rgba(7,11,25,.84), rgba(24,18,55,.82)) !important; backdrop-filter: blur(22px) saturate(125%) !important; -webkit-backdrop-filter: blur(22px) saturate(125%) !important; }
+.page-wrapper .card-container { background: linear-gradient(145deg, rgba(18,25,52,.9), rgba(36,25,72,.82)) !important; border: 1px solid rgba(167,139,250,.35) !important; box-shadow: 0 26px 75px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06) !important; backdrop-filter: blur(26px) saturate(130%) !important; -webkit-backdrop-filter: blur(26px) saturate(130%) !important; color: #f1f5ff !important; }
+.page-title { color: #f8fafc !important; }
+.omid-login-tagline { margin-top: 7px; color: #c4b5fd; font-size: 11px; font-weight: 800; letter-spacing: .2em; text-align: center; }
+.input-wrapper input, .page-form input { background: rgba(6,11,28,.72) !important; border-color: rgba(167,139,250,.32) !important; color: #f1f5ff !important; }
+.input-wrapper input:focus, .page-form input:focus { border-color: #a78bfa !important; box-shadow: 0 0 0 3px rgba(139,92,246,.18) !important; }
+.btn-primary { background: linear-gradient(135deg,#7c3aed,#6366f1) !important; border-color: rgba(196,181,253,.4) !important; color: white !important; box-shadow: 0 8px 22px rgba(124,58,237,.25) !important; }
+.footer-hint { color: #a8b5d4 !important; line-height: 1.9; }
+.footer-hint a { color: #c4b5fd !important; text-decoration: none; font-weight: 700; }
+.footer-hint a:hover { color: #fff !important; text-decoration: underline; }
+</style>
+</head>
+<body>
+<!-- Background -->
+<iframe id="background-iframe" src="/" title="Background content"></iframe>
+<!-- Frosted Glass Overlay -->
+<div id="blur-overlay"></div>
+<!-- Login Form Container -->
+<div class="page-wrapper">
+<div class="card-container">
+<div class="page-header">
+<div class="page-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path>
+</svg>
+</div>
+<h1 class="page-title">Omid Edge Panel</h1>
+<p class="omid-login-tagline">FREE FOR ALL</p>
+</div>
+<form class="page-form" id="loginForm">
+<div class="form-group">
+<div class="input-wrapper">
+<input class="with-icon" disabled="" id="password" name="password" placeholder="Enter your administrator password" required="" type="password"/>
+<svg class="input-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"></path>
+</svg>
+</div>
+</div>
+<button class="btn btn-primary btn-full-width" disabled="" id="loginBtn" type="submit">Log In</button>
+<div class="login-error login-error-hidden" id="errorMsg"></div>
+</form>
+<div class="footer-hint"><a href="https://github.com/omidiran-gaming/Omid-Edge-Panel" rel="noopener noreferrer" target="_blank">Omid Edge Panel</a> <span aria-hidden="true">•</span> Free For All<br/>Developed by <a href="https://t.me/omid_gamingORG" rel="noopener noreferrer" target="_blank">OMIDIRAN</a></div>
+</div>
+</div>
+<!-- IR User Warning Modal -->
+<div class="modal-overlay" id="ir-modal" style="backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); background: rgba(0,0,0,0.7);">
+<div class="modal" style="z-index: 2147483647; max-width: 700px; padding: 0; border-radius: 32px; background: rgba(255, 255, 255, 0.95); box-shadow: 0 0 0 1px rgba(255,255,255,0.2) inset, 0 25px 50px -12px rgba(0, 0, 0, 0.8); overflow: hidden; border: none;">
+<div id="ir-modal-content"></div>
+</div>
+</div>
+<script>
+		document.addEventListener('DOMContentLoaded', async () => {
+			const passwordInput = document.getElementById('password');
+			const loginBtn = document.getElementById('loginBtn');
+			const irModal = document.getElementById('ir-modal');
+			const redirectUrl = 'https://github.com/bia-pain-bache/BPB-Worker-Panel';
+
+			// ====== 客户端鉴权检查（带防循环重定向保护）======
+			// Worker 服务端 302 重定向In某些场景下不可靠（浏览器缓存、
+			// SameSite=Strict 时序、UA 头差异等），需要客户端侧二次兜底。
+			// 但如果 /admin 的鉴权检查持续Failed（根因In Worker 侧），
+			// None条件重定向会造成 /login → /admin → /login 死循环。
+			// 因此用 sessionStorage 计数器限制自动重定向最多 1 次。
+			const REDIRECT_KEY = '_auth_auto_redirect';
+			const autoRedirectCount = parseInt(sessionStorage.getItem(REDIRECT_KEY) || '0', 10);
+			const allowAutoRedirect = autoRedirectCount < 1;
+
+			if (allowAutoRedirect) {
+				try {
+					const authCheckController = new AbortController();
+					const authTimeoutId = setTimeout(() => authCheckController.abort(), 5000);
+
+					const authResponse = await fetch('/admin/config.json?_t=' + Date.now(), {
+						method: 'HEAD',
+						redirect: 'manual',
+						signal: authCheckController.signal,
+						cache: 'no-store'
+					});
+					clearTimeout(authTimeoutId);
+
+					// 200 = Worker 端鉴权通过（cookie 有效），跳转 /admin
+					if (authResponse.ok) {
+						sessionStorage.setItem(REDIRECT_KEY, '1');
+						window.location.replace('/admin');
+						return;
+					}
+				} catch (_) {
+					// 超时或网络Failed，安全兜底：继续展示登录页
+				}
+			} else {
+				// 已达到自动重定向上限，清除计数器，允许用户手动登录
+				sessionStorage.removeItem(REDIRECT_KEY);
+			}
+
+			// Function to enable login
+			const enableLogin = () => {
+				passwordInput.removeAttribute('disabled');
+				loginBtn.removeAttribute('disabled');
+				passwordInput.focus();
+			};
+
+			// Check location
+			try {
+				const controller = new AbortController();
+				const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 seconds timeout
+
+				const response = await fetch('/cdn-cgi/trace', { signal: controller.signal });
+				clearTimeout(timeoutId);
+
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+
+				const text = await response.text();
+				const lines = text.split('\n');
+				const locLine = lines.find(line => line.startsWith('loc='));
+
+				if (locLine && locLine.split('=')[1].trim() === 'IR') {
+					// Is IR user
+					const lang = navigator.language || navigator.userLanguage;
+					const modalContent = document.getElementById('ir-modal-content');
+					let contentHTML = '';
+
+					// 按钮通用样式
+					const primaryBtnStyle = 'display: inline-block; background: linear-gradient(135deg, #faab41 0%, #f6821f 100%); color: white; text-decoration: none; padding: 16px 32px; border-radius: 14px; font-weight: 700; font-size: 17px; box-shadow: 0 8px 16px rgba(246, 130, 31, 0.2); transition: all 0.3s ease; border: none; cursor: pointer; margin: 10px; outline: none; position: relative; overflow: hidden;';
+					const secondaryBtnStyle = 'display: inline-block; background: #f9fafb; color: #9ca3af; text-decoration: none; padding: 14px 28px; border-radius: 14px; font-weight: 400; font-size: 14px; transition: all 0.3s ease; border: none; cursor: pointer; margin: 10px; outline: none;';
+
+					if (lang.toLowerCase().startsWith('zh')) {
+						// Chinese
+						contentHTML = `
+							<div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); padding: 40px 20px; text-align: center;">
+								<div style="font-size: 64px; margin-bottom: 20px; animation: shake 2s infinite;">🔒</div>
+								<h2 style="color: white; font-size: 32px; font-weight: 800; letter-spacing: -1px; margin: 0;">👋 Regional Access Notice</h2>
+							</div>
+							<div style="padding: 40px; text-align: left; line-height: 1.8;">
+								<div style="background: #fdf2f2; border-left: 4px solid #dc2626; padding: 20px; border-radius: 12px; margin-bottom: 30px;">
+									<p style="font-size: 16px; color: #991b1b; margin: 0;">Due to differences in network environments, this project may not provide an optimal experience for users in Iran. For a more stable experience, we recommend a project maintained by a local Iranian community.</p>
+								</div>
+								<div class="modal-button-container">
+									<button id="accept-suggestion" style="${primaryBtnStyle}">⭐ Use BPB-Worker-Panel</button>
+									<button id="stay-current" style="${secondaryBtnStyle}">Continue with this project</button>
+								</div>
+							</div>
+						`;
+					} else if (lang.toLowerCase().startsWith('en')) {
+						// English
+						contentHTML = `
+							<div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); padding: 40px 20px; text-align: center;">
+								<div style="font-size: 64px; margin-bottom: 20px; animation: shake 2s infinite;">🔒</div>
+								<h2 style="color: white; font-size: 32px; font-weight: 800; letter-spacing: -1px; margin: 0;">👋 Geographic Restriction</h2>
+							</div>
+							<div style="padding: 40px; text-align: left; line-height: 1.8;">
+								<div style="background: #fdf2f2; border-left: 4px solid #dc2626; padding: 20px; border-radius: 12px; margin-bottom: 30px;">
+									<p style="font-size: 16px; color: #991b1b; margin: 0;">We're unable to provide optimal service in your region. To get the best experience, we strongly recommend switching to specialized solutions maintained by the Iranian developer community.</p>
+								</div>
+								<div class="modal-button-container">
+									<button id="accept-suggestion" style="${primaryBtnStyle}">⭐ Use BPB-Worker-Panel</button>
+									<button id="stay-current" style="${secondaryBtnStyle}">Continue with current project</button>
+								</div>
+							</div>
+						`;
+					} else {
+						// Default to Persian (IR)
+						contentHTML = `
+							<div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); padding: 40px 20px; text-align: center;">
+								<div style="font-size: 64px; margin-bottom: 20px; animation: shake 2s infinite;">🔒</div>
+								<h2 style="color: white; font-size: 32px; font-weight: 800; letter-spacing: -1px; margin: 0;">👋 دسترسی جغرافیایی محدود</h2>
+							</div>
+							<div style="padding: 40px; text-align: right; line-height: 1.8; direction: rtl;">
+								<div style="background: #fdf2f2; border-right: 4px solid #dc2626; padding: 20px; border-radius: 12px; margin-bottom: 30px;">
+									<p style="font-size: 16px; color: #991b1b; margin: 0;">برای خدمات بهتر، ما پروژه‌های متخصص توسعه‌یافته توسط جامعه توسعه‌دهندگان ایرانی را توصیه می‌کنیم. این راه‌حل‌ها برای محیط شبکه شما بهینه‌سازی شده‌اند.</p>
+								</div>
+								<div class="modal-button-container" style="direction: ltr;">
+									<button id="accept-suggestion" style="${primaryBtnStyle}">⭐ استفاده از BPB-Worker-Panel</button>
+									<button id="stay-current" style="${secondaryBtnStyle}">ادامه استفاده از پروژه فعلی</button>
+								</div>
+							</div>
+						`;
+					}
+
+					modalContent.innerHTML = contentHTML;
+					irModal.classList.add('show');
+
+					// 倒计时逻辑
+					const acceptBtn = document.getElementById('accept-suggestion');
+					const stayBtn = document.getElementById('stay-current');
+
+					// 注入动画Progress bar
+					const progressBar = document.createElement('div');
+					progressBar.className = 'btn-countdown-line';
+					acceptBtn.classList.add('btn-tech-upgrade');
+					acceptBtn.appendChild(progressBar);
+
+					// 8s倒计时自动跳转
+					const redirectTimer = setTimeout(() => {
+						window.location.href = redirectUrl;
+					}, 5000);
+
+					acceptBtn.onclick = () => {
+						clearTimeout(redirectTimer);
+						window.location.href = redirectUrl;
+					};
+
+					stayBtn.onclick = () => {
+						clearTimeout(redirectTimer);
+						irModal.classList.remove('show');
+						enableLogin();
+					};
+
+					progressBar.style.animationDuration = '5s';
+				} else {
+					// Not IR user
+					enableLogin();
+				}
+			} catch (error) {
+				console.log('Location check failed or timed out:', error);
+				// Timeout or error -> treat as not IR
+				enableLogin();
+			}
+		});
+
+		document.getElementById('loginForm').addEventListener('submit', async (e) => {
+			e.preventDefault();
+
+			const password = document.getElementById('password').value;
+			const loginBtn = document.getElementById('loginBtn');
+			const errorMsg = document.getElementById('errorMsg');
+			const passwordInput = document.getElementById('password');
+
+			// 清除之前的错误信息
+			errorMsg.classList.add('login-error-hidden');
+
+			// 按钮加载状态
+			loginBtn.disabled = true;
+			loginBtn.classList.add('btn-loading');
+
+			// 用户主动登录，Reset自动重定向计数器
+			sessionStorage.removeItem('_auth_auto_redirect');
+
+			try {
+				const response = await fetch('/login', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded',
+					},
+					body: 'password=' + encodeURIComponent(password),
+					redirect: 'manual'
+				});
+
+				// ====== 关键修复：处理 Worker 的 auth cookie 短路逻辑 ======
+				// Worker /login 路Powered byIn处理 POST 之前会先检查 auth cookie：
+				//   if (authCookie == MD5MD5(...)) return 302 → /admin
+				// 如果 cookie 仍然有效（如从 /admin 刷新被踢回 /login 的场景），
+				// Worker 不会处理 POST，而是直接返回 302。
+				// fetch 默认会自动跟随 302 → GET /admin → 返回 HTML → 前端误判enable it for"Incorrect password"。
+				// 使用 redirect: 'manual' 拦截 302，直接跳转 /admin。
+				if (response.type === 'opaqueredirect') {
+					// Worker 返回了重定向 = auth cookie 仍然有效，直接进 /admin
+					window.location.replace('/admin');
+					return;
+				}
+
+				if (response.ok) {
+					const contentType = response.headers.get('content-type');
+
+					if (contentType && contentType.includes('application/json')) {
+						// 返回的是JSON，This means登录成功
+						const data = await response.json();
+						if (data.success) {
+							// 登录成功，使用 replace 避免留下 /login In浏览器历史中
+							window.location.replace('/admin');
+						}
+					} else {
+						// 返回的是HTML，This meansIncorrect password
+						// 注意：不清理 cookie —— auth cookie 是 HttpOnly，JS None法Action；
+						// 清理非 HttpOnly cookie 会破坏其他功能状态，弊大于利
+						errorMsg.textContent = 'Incorrect password. Please try again.';
+						errorMsg.classList.remove('login-error-hidden');
+						passwordInput.focus();
+						passwordInput.select();
+					}
+				} else {
+					errorMsg.textContent = 'Login failed. Please try again (' + response.status + ')';
+					errorMsg.classList.remove('login-error-hidden');
+				}
+			} catch (error) {
+				console.error('Login error:', error);
+				errorMsg.textContent = 'Network error. Check your connection.';
+				errorMsg.classList.remove('login-error-hidden');
+			} finally {
+				// 恢复按钮状态
+				loginBtn.disabled = false;
+				loginBtn.classList.remove('btn-loading');
+			}
+		});
+	</script>
+</body>
+</html>
