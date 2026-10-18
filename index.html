@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070813">
+<meta name="description" content="Omid Edge Panel — your own Cloudflare edge, run like a command deck. Build configs, hand out subscriptions, stay in control. Free For All, forged by OMID-IRAN.">
+<title>Omid Edge Panel — Free For All</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--void:#070813;--panel:#0f1330;--violet:#8b5cf6;--violet-d:#6d28d9;--cyan:#45e9f7;--pink:#ff4fd8;--green:#55f4c5;
+--text:#f1f3ff;--muted:#9aa5c8;--line:rgba(139,92,246,.35);--max:1180px;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--void);color:var(--text);font:500 18px/1.55 'Rajdhani',system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--violet);color:#fff}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+.orb{font-family:'Orbitron',sans-serif}
+/* background */
+.bg{position:fixed;inset:0;z-index:-3;background:radial-gradient(ellipse 70% 50% at 50% -5%,rgba(109,40,217,.55),transparent 70%),radial-gradient(ellipse 40% 35% at 90% 40%,rgba(69,233,247,.10),transparent 70%),radial-gradient(ellipse 40% 35% at 5% 75%,rgba(255,79,216,.10),transparent 70%)}
+.floor{position:fixed;left:0;right:0;bottom:0;height:55vh;z-index:-2;overflow:hidden;pointer-events:none;mask-image:linear-gradient(to top,#000 10%,transparent);-webkit-mask-image:linear-gradient(to top,#000 10%,transparent)}
+.floor::before{content:"";position:absolute;inset:-100% -50% 0;background:linear-gradient(var(--violet) 1px,transparent 1px) 0 0/100% 60px,linear-gradient(90deg,var(--violet) 1px,transparent 1px) 0 0/60px 100%;opacity:.3;transform:perspective(440px) rotateX(62deg);transform-origin:50% 100%;animation:run 2.6s linear infinite}
+@keyframes run{to{background-position:0 60px,0 0}}
+/* buttons */
+.btn{--c:14px;display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 28px;font:700 18px 'Rajdhani',sans-serif;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;position:relative;overflow:hidden;border:0;
+clip-path:polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));transition:filter .2s,transform .12s}
+.btn svg{width:20px;height:20px;flex:none}
+.btn.main{color:#fff;background:linear-gradient(100deg,var(--violet-d),var(--violet) 55%,#6366f1)}
+.btn.ghost{color:var(--text);background:linear-gradient(var(--panel),var(--panel)) padding-box;box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn::before{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg);transition:left .6s}
+.btn:hover{filter:brightness(1.18) drop-shadow(0 0 14px rgba(139,92,246,.8))}
+.btn:hover::before{left:130%}
+.btn:active{transform:scale(.98)}
+.btn.sm{height:42px;padding:0 20px;font-size:16px;--c:10px}
+/* nav */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(7,8,19,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand svg{width:38px;height:38px;filter:drop-shadow(0 0 8px rgba(139,92,246,.8))}
+.brand b{font:900 16px 'Orbitron',sans-serif;letter-spacing:.08em;display:block;line-height:1.1}
+.brand small{font-size:12px;color:var(--muted);letter-spacing:.14em}
+.links{display:flex;gap:30px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:16px;color:var(--muted)}
+.links a:hover{color:var(--cyan)}
+.acts{display:flex;gap:10px}
+/* hero */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;min-height:calc(100vh - 68px);padding:50px 22px 70px}
+.live{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;font-size:15px;font-weight:700;letter-spacing:.05em;color:var(--green);background:rgba(85,244,197,.08);border:1px solid rgba(85,244,197,.35);clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--green);animation:ping 1.8s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(85,244,197,.7)}70%,100%{box-shadow:0 0 0 9px rgba(85,244,197,0)}}
+h1{font:900 clamp(44px,7.4vw,96px)/.96 'Orbitron',sans-serif;margin:22px 0 22px;letter-spacing:-.01em;position:relative}
+h1 span{display:block;background:linear-gradient(95deg,var(--violet),var(--pink) 55%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+h1::after{content:attr(data-t);position:absolute;inset:0;color:var(--cyan);mix-blend-mode:screen;opacity:0;animation:glitch 6s infinite;clip-path:inset(0 0 55% 0)}
+@keyframes glitch{0%,93%,100%{opacity:0;transform:none}94%{opacity:.8;transform:translate(-5px,1px)}96%{opacity:.8;transform:translate(5px,-1px)}98%{opacity:0}}
+.lead{max-width:540px;color:#c5cdea;font-size:21px}
+.lead b{color:#fff}
+.ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.sig{margin-top:30px;font-size:15px;color:var(--muted);letter-spacing:.06em}
+.sig b{color:var(--lilac,#c4b5fd)}
+.boot{margin-top:20px;min-height:26px;font:600 17px/1.4 'Rajdhani',ui-monospace,monospace;color:var(--green);letter-spacing:.04em}.boot::after{content:"▌";margin-left:4px;animation:blink 1s steps(1) infinite}@keyframes blink{50%{opacity:0}}
+/* core */
+.core-wrap{position:relative;aspect-ratio:1;max-width:520px;width:100%;margin:0 auto;display:grid;place-items:center;perspective:900px}
+.core{width:100%;height:100%;transition:transform .15s ease-out;filter:drop-shadow(0 0 36px rgba(139,92,246,.65))}
+.r1{transform-origin:200px 200px;animation:rot 22s linear infinite}
+.r2{transform-origin:200px 200px;animation:rot 12s linear infinite reverse}
+.r3{transform-origin:200px 200px;animation:rot 7s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.bolt{animation:flick 3.4s infinite}
+@keyframes flick{0%,90%,100%{opacity:1}92%{opacity:.3}94%{opacity:1}96%{opacity:.5}}
+.chip{position:absolute;display:flex;gap:10px;align-items:center;padding:10px 16px;background:rgba(15,19,48,.9);border:1px solid var(--line);font-size:15px;line-height:1.2;
+clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);animation:bob 5s ease-in-out infinite alternate}
+.chip b{display:block;font-size:16px}
+.chip small{color:var(--muted);font-size:13px}
+.chip.a{left:-2%;top:16%}
+.chip.b{right:-2%;bottom:14%;animation-delay:-2.5s}
+.chip.c{left:6%;bottom:6%;animation-delay:-1.2s}
+.chip em{font-style:normal;color:var(--cyan);font:700 18px 'Orbitron',sans-serif}
+@keyframes bob{to{translate:0 -12px}}
+/* ticker */
+.ticker{border-block:1px solid var(--line);background:rgba(15,19,48,.7);overflow:hidden;white-space:nowrap}
+.ticker div{display:inline-flex;gap:46px;padding:14px 0;animation:tick 28s linear infinite;font:700 17px 'Orbitron',sans-serif;letter-spacing:.14em;color:var(--lilac,#c4b5fd)}
+.ticker span::before{content:"◆";color:var(--cyan);margin-right:46px;font-size:12px}
+@keyframes tick{to{transform:translateX(-50%)}}
+/* loadout */
+.sec{padding:100px 0}
+.sec h2{font:900 clamp(30px,4.6vw,54px)/1.05 'Orbitron',sans-serif;margin-bottom:16px}
+.sec h2 em{font-style:normal;color:var(--violet)}
+.sec .intro{max-width:600px;color:var(--muted);font-size:20px}
+.load{display:grid;grid-template-columns:.85fr 1.15fr;gap:22px;margin-top:44px}
+.slots{display:flex;flex-direction:column;gap:12px}
+.slot{--c:16px;display:flex;align-items:center;gap:16px;text-align:left;padding:18px 20px;cursor:pointer;color:var(--muted);font:700 20px 'Rajdhani',sans-serif;background:var(--panel);border:0;box-shadow:inset 0 0 0 1.5px rgba(139,92,246,.2);
+clip-path:polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));transition:background .2s,color .2s,box-shadow .2s,transform .2s}
+.slot svg{width:30px;height:30px;flex:none;color:var(--violet)}
+.slot:hover{color:var(--text);transform:translateX(6px)}
+.slot[aria-selected=true]{color:#fff;background:linear-gradient(100deg,rgba(109,40,217,.65),rgba(15,19,48,.95));box-shadow:inset 0 0 0 1.5px var(--cyan),0 0 26px rgba(69,233,247,.15);transform:translateX(10px)}
+.slot[aria-selected=true] svg{color:var(--cyan)}
+.detail{--c:26px;position:relative;min-height:320px;padding:38px 38px 34px;background:linear-gradient(155deg,rgba(25,31,72,.95),rgba(10,13,34,.97));border:0;
+clip-path:polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));box-shadow:inset 0 0 0 1.5px var(--line)}
+.detail::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 3px)}
+.pane{display:none}
+.pane.on{display:block;animation:swap .35s ease-out}
+@keyframes swap{from{opacity:0;translate:0 10px}}
+.pane .ico{width:64px;height:64px;color:var(--cyan);filter:drop-shadow(0 0 14px rgba(69,233,247,.7))}
+.pane h3{font:900 28px 'Orbitron',sans-serif;margin:18px 0 12px}
+.pane p{font-size:21px;color:#c5cdea;max-width:520px}
+.pane .tag{display:inline-block;margin-top:22px;padding:5px 14px;font-weight:700;font-size:15px;letter-spacing:.1em;color:var(--green);border:1px solid rgba(85,244,197,.4);background:rgba(85,244,197,.07)}
+/* about */
+.about{--c:30px;display:grid;grid-template-columns:1.4fr .6fr;gap:30px;padding:48px;background:linear-gradient(135deg,rgba(109,40,217,.28),rgba(15,19,48,.92) 60%);
+clip-path:polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));box-shadow:inset 0 0 0 1.5px var(--line)}
+.about p{font-size:20px;color:#c5cdea;max-width:640px}
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.tags span{padding:6px 14px;font-weight:700;font-size:14px;letter-spacing:.12em;color:var(--cyan);border:1px solid rgba(69,233,247,.4);background:rgba(69,233,247,.06)}
+.sigbox{display:grid;place-items:center;text-align:center;border-left:1px dashed var(--line);padding-left:30px}
+.mono{font:900 clamp(30px,4vw,46px) 'Orbitron',sans-serif;background:linear-gradient(95deg,var(--violet),var(--pink),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sigbox small{color:var(--muted);letter-spacing:.16em;font-size:14px}
+.cta{margin-top:30px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:32px 40px;border:1.5px solid var(--line);background:rgba(15,19,48,.7)}
+.cta h3{font:900 24px 'Orbitron',sans-serif;margin-bottom:4px}
+.cta p{color:var(--muted)}
+.foot{border-top:1px solid var(--line);padding:30px 0 36px;font-size:16px;color:var(--muted)}
+.foot .wrap{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.foot nav{display:flex;gap:22px;font-weight:700}
+.foot a:hover{color:var(--cyan)}
+.foot b{color:var(--text)}
+@media (max-width:900px){
+.links{display:none}
+.hero{grid-template-columns:1fr;min-height:0;padding-top:36px}
+.core-wrap{max-width:360px;order:-1}
+.load,.about{grid-template-columns:1fr}
+.sigbox{border-left:0;padding-left:0;border-top:1px dashed var(--line);padding-top:24px}
+.about{padding:34px 24px}
+.slots{flex-direction:row;overflow-x:auto;padding-bottom:6px}
+.slot{flex:none;padding:14px 18px;font-size:18px}
+.slot:hover,.slot[aria-selected=true]{transform:none}
+.detail{padding:30px 24px}
+.acts .ghost{display:none}
+.chip.c{display:none}
+}
+@media (max-width:480px){.brand small{display:none}.btn{padding:0 20px}.chip.a,.chip.b{transform:scale(.85)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="floor"></div>
+
+<header class="top"><div class="wrap nav">
+  <a class="brand" href="#home" aria-label="Omid Edge Panel home">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="n" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#bb63ff"/><stop offset=".52" stop-color="#6d74ff"/><stop offset="1" stop-color="#45e9f7"/></linearGradient></defs><rect x="2" y="2" width="60" height="60" rx="17" fill="#0d1130" stroke="url(#n)" stroke-width="3"/><circle cx="32" cy="32" r="18" fill="none" stroke="url(#n)" stroke-width="5"/><path d="M35.5 17.5 22.7 34.2h9.1l-3.1 12.4 13.1-18h-9.3z" fill="#f4fdff"/></svg>
+    <span><b>OMID EDGE PANEL</b><small>OMID-IRAN / EDGE SYSTEMS</small></span>
+  </a>
+  <nav class="links" aria-label="Main navigation"><a href="#features">Power-Ups</a><a href="#about">The Crew</a><a href="https://github.com/omidiran-gaming/Omid-Edge-Panel" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav>
+  <div class="acts">
+    <a class="btn ghost sm" href="https://github.com/omidiran-gaming/Omid-Edge-Panel" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a class="btn main sm" href="/login">Open Panel</a>
+  </div>
+</div></header>
+
+<main id="home">
+<section class="wrap hero">
+  <div>
+    <span class="live"><i></i>Lobby open — Player One, you're up</span>
+    <h1 data-t="LEVEL UP YOUR EDGE.">LEVEL UP<span>YOUR EDGE.</span></h1>
+    <p class="lead">Your own Cloudflare edge, run like a command deck. Spin up configs, hand out subscriptions, and keep every lever one tap away — <b>self-managed, no middlemen, no rented dashboards.</b></p>
+    <p class="boot" id="boot" aria-hidden="true"></p>
+    <div class="ctas">
+      <a class="btn main" href="/login"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Press Start</a>
+      <a class="btn ghost" href="https://github.com/omidiran-gaming/Omid-Edge-Panel" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>Peek Under the Hood</a>
+    </div>
+    <p class="sig"><b>Free For All</b> · Forged by OMID-IRAN, open to every player</p>
+  </div>
+
+  <div class="core-wrap" id="coreWrap" aria-label="Animated edge core illustration">
+    <svg class="core" id="core" viewBox="0 0 400 400" aria-hidden="true">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#bb63ff"/><stop offset=".5" stop-color="#6d74ff"/><stop offset="1" stop-color="#45e9f7"/></linearGradient><radialGradient id="rg"><stop stop-color="#2a1b66"/><stop offset="1" stop-color="#0a0d26"/></radialGradient></defs>
+      <circle class="r1" cx="200" cy="200" r="188" fill="none" stroke="url(#g)" stroke-width="2.5" stroke-dasharray="120 26 8 26"/>
+      <circle class="r2" cx="200" cy="200" r="158" fill="none" stroke="#45e9f7" stroke-opacity=".55" stroke-width="2" stroke-dasharray="3 12"/>
+      <circle class="r3" cx="200" cy="200" r="128" fill="none" stroke="#ff4fd8" stroke-opacity=".6" stroke-width="3" stroke-dasharray="60 90"/>
+      <circle cx="200" cy="200" r="98" fill="url(#rg)" stroke="url(#g)" stroke-width="7"/>
+      <path class="bolt" d="M214 128 164 205h36l-12 68 52-82h-37z" fill="#f4fdff" stroke="#f4fdff" stroke-linejoin="round" stroke-width="2"/>
+    </svg>
+    <div class="chip a"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M4 6h16M4 12h10M4 18h16"/></svg><span><b>Custom Loadouts</b><small>Configs, your way</small></span></div>
+    <div class="chip b"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#45e9f7" stroke-width="2"><path d="M12 2 3 7v6c0 5 4 8 9 9 5-1 9-4 9-9V7z"/></svg><span><b>Edge-native</b><small>Workers &amp; Pages ready</small></span></div>
+    <div class="chip c"><em id="ping">—</em><span><b>Live Ping</b><small>you → your edge</small></span></div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true"><div><span>FREE FOR ALL</span><span>YOUR CLOUDFLARE. YOUR SERVER.</span><span>WORKERS READY</span><span>PAGES READY</span><span>COMMUNITY POWERED</span></div></div>
+
+<section class="sec" id="features"><div class="wrap">
+  <h2>One panel. <em>Every power-up.</em></h2>
+  <p class="intro">Everything you'd reach for mid-session — configs, links, access — pinned to a single screen. Pick a slot and see what it does.</p>
+  <div class="load">
+    <div class="slots" role="tablist" aria-label="Panel features">
+      <button class="slot" role="tab" aria-selected="true" aria-controls="p0" id="t0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h16"/></svg>Custom Loadouts</button>
+      <button class="slot" role="tab" aria-selected="false" aria-controls="p1" id="t1" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0-1-8.9A6 6 0 0 0 4.7 11.5 3.8 3.8 0 0 0 6 19z"/></svg>Drop-In Deploy</button>
+      <button class="slot" role="tab" aria-selected="false" aria-controls="p2" id="t2" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>Subscription Hub</button>
+      <button class="slot" role="tab" aria-selected="false" aria-controls="p3" id="t3" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>Clean HUD</button>
+    </div>
+    <div class="detail">
+      <div class="pane on" id="p0" role="tabpanel" aria-labelledby="t0"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h16"/></svg><h3>Custom Loadouts</h3><p>Build connection profiles your way. Group them, name them, and swap between setups without breaking a sweat.</p><span class="tag">LOADOUT READY</span></div>
+      <div class="pane" id="p1" role="tabpanel" aria-labelledby="t1"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0-1-8.9A6 6 0 0 0 4.7 11.5 3.8 3.8 0 0 0 6 19z"/></svg><h3>Drop-In Deploy</h3><p>Made for Cloudflare Workers and Pages. Pick the route that fits your project and push it live on infrastructure you control.</p><span class="tag">SPAWN ON THE EDGE</span></div>
+      <div class="pane" id="p2" role="tabpanel" aria-labelledby="t2"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><h3>Subscription Hub</h3><p>Subscription links and config access ride on the panel's own routes, so everything you hand out stays wired to one home base.</p><span class="tag">HOME BASE</span></div>
+      <div class="pane" id="p3" role="tabpanel" aria-labelledby="t3"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg><h3>Clean HUD</h3><p>A branded interface with practical controls — nothing cryptic, nothing cluttered. You always know what the next button does.</p><span class="tag">READ THE HUD</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" id="about" style="padding-top:20px"><div class="wrap">
+  <div class="about">
+    <div>
+      <h2>Built for the squad.<br><em>Open to every player.</em></h2>
+      <p>Omid Edge Panel is a community project from the OMID-IRAN crew. One idea drives it: great tools shouldn't hide behind a paywall or a maze of menus. Clear workflows, a polished edge experience, and a codebase anyone can poke at, fork, and make better.</p>
+      <div class="tags"><span>SELF-MANAGED</span><span>WORKERS + PAGES</span><span>COMMUNITY CO-OP</span><span>FREE FOR ALL</span></div>
+    </div>
+    <div class="sigbox"><div><div class="mono">OMID.IR</div><small>GUILD LEAD · OMID-IRAN</small></div></div>
+  </div>
+  <div class="cta">
+    <div><h3>Ready to join the lobby?</h3><p>Jump into the panel, read the source, or find the squad on Telegram.</p></div>
+    <div class="ctas" style="margin:0">
+      <a class="btn main" href="/login">Press Start</a>
+      <a class="btn ghost" href="https://t.me/omid_gamingORG" target="_blank" rel="noopener noreferrer">Join the Squad</a>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer class="foot"><div class="wrap">
+  <span>© <span id="year">2026</span> <b>OMID EDGE PANEL</b> · Free For All</span>
+  <nav><a href="https://github.com/omidiran-gaming/Omid-Edge-Panel" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://t.me/omid_gamingORG" target="_blank" rel="noopener noreferrer">Telegram</a><a href="#about">About</a><a href="#home" aria-label="Back to top">Respawn ↑</a></nav>
+  <span>Forged with passion by <b>OMID-IRAN</b></span>
+</div></footer>
+
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  $('year').textContent=String(new Date().getFullYear());
+
+  /* feature loadout tabs */
+  var tabs=[].slice.call(document.querySelectorAll('.slot')), panes=[].slice.call(document.querySelectorAll('.pane'));
+  function pick(i){
+    tabs.forEach(function(t,k){t.setAttribute('aria-selected',k===i);t.tabIndex=k===i?0:-1});
+    panes.forEach(function(p,k){p.classList.toggle('on',k===i)});
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){pick(i)});
+    t.addEventListener('keydown',function(e){
+      var n=e.key==='ArrowDown'||e.key==='ArrowRight'?1:e.key==='ArrowUp'||e.key==='ArrowLeft'?-1:0;
+      if(n){e.preventDefault();var j=(i+n+tabs.length)%tabs.length;pick(j);tabs[j].focus()}
+    });
+  });
+
+  /* core tilt */
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, core=$('core');
+  if(!reduce&&matchMedia('(hover:hover)').matches){
+    addEventListener('mousemove',function(e){
+      var dx=e.clientX/innerWidth-.5, dy=e.clientY/innerHeight-.5;
+      core.style.transform='rotateY('+dx*16+'deg) rotateX('+-dy*16+'deg)';
+    });
+  }
+
+  /* seamless ticker: repeat the set */
+  var tk=document.querySelector('.ticker div');tk.innerHTML=tk.innerHTML.repeat(4);
+
+  /* boot console typewriter */
+  var L=['> edge.connect()  ... linked','> loadout.equip(configs)  ... ready','> subscriptions.sync()  ... ok',"> lobby.open()  Player One, you're up"],b=$('boot'),li=0,ci=0;
+  (function type(){
+    if(reduce){b.textContent=L[3];return}
+    var l=L[li];
+    if(ci<=l.length){b.textContent=l.slice(0,ci++);setTimeout(type,34)}
+    else{setTimeout(function(){ci=0;li=(li+1)%L.length;type()},1600)}
+  })();
+
+  /* real latency to the edge (shows a dash when unavailable) */
+  var t0=performance.now();
+  fetch('/cdn-cgi/trace',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw 0; $('ping').textContent=Math.round(performance.now()-t0)+' ms';
+  }).catch(function(){$('ping').textContent='—'});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="noindex, nofollow" name="robots"/>
+<title>Omid Edge Panel | Configuration Error</title>
+<script>try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.remove('dark-mode')}catch(e){}</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&amp;family=Rajdhani:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<style id="omid-gamer-theme">
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --og-void:#070813;--og-violet:#8b5cf6;--og-cyan:#45e9f7;--og-pink:#ff4fd8;--og-green:#55f4c5;--og-warn:#ff6b8a;
+  --og-text:#f1f3ff;--og-muted:#9aa5c8;--og-line:rgba(139,92,246,.35);
+  --og-display:'Orbitron','Rajdhani','Segoe UI',sans-serif;
+  --og-body:'Rajdhani','Inter',-apple-system,'Segoe UI',sans-serif;
+  --og-cut:14px;
+}
+html{color-scheme:dark}
+html:not(.dark-mode){color-scheme:light}
+body{font-family:var(--og-body);min-height:100vh;overflow:hidden;background:var(--og-void);color:var(--og-text)}
+html:not(.dark-mode) body{background:#eaf5f2;color:#203b3a}
+
+/* ---------- background FX ---------- */
+#ogFx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:var(--og-void)}
+#ogFx .og-bg{position:absolute;inset:0;background:
+  radial-gradient(900px 520px at 12% -5%,rgba(139,92,246,.32),transparent 60%),
+  radial-gradient(760px 460px at 96% 8%,rgba(69,233,247,.16),transparent 62%),
+  radial-gradient(700px 500px at 50% 112%,rgba(255,79,216,.16),transparent 65%)}
+#ogFx .og-floor{position:absolute;left:-50%;right:-50%;bottom:-8%;height:58%;
+  background-image:linear-gradient(rgba(139,92,246,.42) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,.42) 1px,transparent 1px);
+  background-size:56px 56px;transform:perspective(420px) rotateX(62deg);transform-origin:50% 100%;animation:ogRun 3.2s linear infinite;
+  -webkit-mask-image:linear-gradient(to top,#000 5%,transparent 88%);mask-image:linear-gradient(to top,#000 5%,transparent 88%)}
+#ogFx .og-scan{position:absolute;inset:0;opacity:.5;mix-blend-mode:overlay;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
+#ogFx .og-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(2,3,12,.62) 100%)}
+@keyframes ogRun{to{background-position:0 56px}}
+html:not(.dark-mode) #ogFx{background:#eaf5f2}
+html:not(.dark-mode) #ogFx .og-bg{background:
+  radial-gradient(900px 520px at 10% -5%,rgba(139,92,246,.18),transparent 60%),
+  radial-gradient(760px 460px at 96% 8%,rgba(14,159,166,.2),transparent 62%),
+  radial-gradient(700px 500px at 50% 112%,rgba(255,79,216,.1),transparent 65%)}
+html:not(.dark-mode) #ogFx .og-floor{opacity:.35;background-image:linear-gradient(rgba(13,130,127,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(13,130,127,.35) 1px,transparent 1px)}
+html:not(.dark-mode) #ogFx .og-scan,html:not(.dark-mode) #ogFx .og-vig{display:none}
+
+/* ---------- layout ---------- */
+.page-wrapper{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;z-index:1;padding:20px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#6d28d9 transparent}
+.page-wrapper::-webkit-scrollbar{width:9px}
+.page-wrapper::-webkit-scrollbar-thumb{background:linear-gradient(#8b5cf6,#45e9f7);border-radius:9px}
+.card-container{position:relative;width:100%;max-width:620px;margin:auto;padding:30px 30px 24px;border-radius:22px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(15,19,48,.72),rgba(10,10,30,.6));border:1px solid var(--og-line);
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  box-shadow:0 30px 90px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.03) inset,0 0 70px rgba(139,92,246,.12);
+  animation:containerAppear .45s ease-out both}
+.card-container::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#6d28d9,#8b5cf6,#45e9f7,#ff4fd8,#8b5cf6,#6d28d9);background-size:300% 100%;animation:ogFlow 6s linear infinite;box-shadow:0 0 18px rgba(139,92,246,.8)}
+@keyframes ogFlow{to{background-position:300% 0}}
+@keyframes containerAppear{0%{opacity:0;transform:translateY(30px) scale(.94)}100%{opacity:1;transform:none}}
+html:not(.dark-mode) .card-container{background:transparent;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+html:not(.dark-mode) .card-container::before{background:linear-gradient(90deg,#0d9488,#8b5cf6,#ff4fd8,#0d9488);background-size:300% 100%;box-shadow:none}
+
+/* ---------- hero header ---------- */
+.header{position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:22px;padding:24px 26px;margin-bottom:16px;isolation:isolate;
+  background:linear-gradient(120deg,rgba(109,40,217,.34),rgba(15,19,48,.78) 45%,rgba(69,233,247,.12));
+  clip-path:polygon(var(--og-cut) 0,calc(100% - var(--og-cut)) 0,100% var(--og-cut),100% calc(100% - var(--og-cut)),calc(100% - var(--og-cut)) 100%,var(--og-cut) 100%,0 calc(100% - var(--og-cut)),0 var(--og-cut))}
+.header::before{content:"";position:absolute;inset:0;z-index:-1;padding:1.5px;background:linear-gradient(135deg,var(--og-violet),transparent 35%,transparent 65%,var(--og-cyan));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.header::after{content:"";position:absolute;top:0;bottom:0;width:140px;left:-160px;z-index:-1;background:linear-gradient(100deg,transparent,rgba(255,255,255,.12),transparent);transform:skewX(-18deg);animation:ogSweep 6.5s ease-in-out infinite}
+@keyframes ogSweep{0%,55%{left:-160px}100%{left:112%}}
+.og-core{flex:0 0 auto;width:84px;height:84px;position:relative;filter:drop-shadow(0 0 16px rgba(139,92,246,.7));transition:transform .15s ease-out}
+.og-core svg{width:100%;height:100%;overflow:visible}
+.og-core .r1{transform-origin:50% 50%;animation:ogSpin 14s linear infinite}
+.og-core .r2{transform-origin:50% 50%;animation:ogSpin 9s linear infinite reverse}
+.og-core .r3{transform-origin:50% 50%;animation:ogSpin 20s linear infinite}
+.og-core .bolt{transform-origin:50% 50%;animation:ogFlick 3.4s infinite}
+@keyframes ogSpin{to{transform:rotate(360deg)}}
+@keyframes ogFlick{0%,100%{opacity:1}46%{opacity:1}48%{opacity:.35}50%{opacity:1}53%{opacity:.5}55%{opacity:1}}
+.header-title{flex:1 1 240px;min-width:0}
+.og-eyebrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.og-live{display:inline-flex;align-items:center;gap:7px;padding:3px 11px 3px 9px;font:700 11px/1 var(--og-display);letter-spacing:.18em;color:var(--og-warn);
+  background:rgba(255,107,138,.1);border:1px solid rgba(255,107,138,.5);clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px)}
+.og-live i{width:7px;height:7px;border-radius:50%;background:var(--og-warn);box-shadow:0 0 10px var(--og-warn);animation:ogPulse 1.4s infinite}
+@keyframes ogPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.55);opacity:.45}}
+.og-tag{font:600 11px var(--og-display);letter-spacing:.22em;color:var(--og-muted);text-transform:uppercase}
+.page-title{position:relative;display:inline-block;margin:0;font:900 clamp(20px,4.2vw,32px)/1.12 var(--og-display);letter-spacing:.02em;text-transform:uppercase;word-break:break-word;
+  background:linear-gradient(95deg,#fff 0%,#c4b5fd 30%,#ff4fd8 62%,#45e9f7 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 18px rgba(139,92,246,.55))}
+.page-title::after{content:attr(data-og);position:absolute;left:0;top:0;width:100%;background:inherit;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;opacity:0;pointer-events:none;animation:ogGlitch 5.5s infinite steps(1)}
+@keyframes ogGlitch{0%,92%,100%{opacity:0;transform:none}93%{opacity:.9;transform:translate(3px,-1px);clip-path:inset(10% 0 55% 0)}95%{opacity:.9;transform:translate(-3px,1px);clip-path:inset(55% 0 12% 0)}97%{opacity:0}}
+.omid-brand-meta{margin:8px 0 0;font:600 12px var(--og-display);letter-spacing:.2em;text-transform:uppercase;color:var(--og-muted)}
+.omid-brand-meta span{padding:0 4px;color:var(--og-pink)}
+.og-boot{margin-top:8px;font:600 12.5px/1.4 'Courier New',monospace;color:var(--og-cyan);min-height:1.4em;opacity:.9}
+.og-boot::after{content:"▌";margin-left:2px;animation:ogBlink 1s steps(1) infinite}
+@keyframes ogBlink{50%{opacity:0}}
+
+/* ---------- ticker ---------- */
+.og-ticker{position:relative;margin:0 0 20px;overflow:hidden;border-top:1px solid var(--og-line);border-bottom:1px solid var(--og-line);background:rgba(7,8,19,.55);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.og-track{display:flex;width:max-content;gap:34px;padding:9px 0;animation:ogTick 38s linear infinite;font:600 11px var(--og-display);letter-spacing:.2em;color:var(--og-muted);text-transform:uppercase;white-space:nowrap}
+.og-ticker b{color:var(--og-cyan);font-weight:700}
+.og-ticker em{font-style:normal;color:var(--og-pink)}
+@keyframes ogTick{to{transform:translateX(-50%)}}
+
+/* ---------- module (message panel) ---------- */
+.module{position:relative;border-radius:6px 18px 6px 18px;border:1px solid var(--og-line);padding:24px 26px;
+  background:linear-gradient(150deg,rgba(15,19,48,.86),rgba(16,12,40,.72));box-shadow:0 14px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04);animation:ogRise .65s cubic-bezier(.2,.8,.2,1) .1s both}
+.module::before{content:"";position:absolute;left:-1px;top:18px;bottom:18px;width:3px;border-radius:3px;background:linear-gradient(var(--og-pink),var(--og-violet));box-shadow:0 0 12px var(--og-pink)}
+.module::after{content:"";position:absolute;right:-1px;top:-1px;width:26px;height:26px;border-top:2px solid var(--og-pink);border-right:2px solid var(--og-pink);border-radius:0 18px 0 0;opacity:.7;pointer-events:none}
+@keyframes ogRise{from{opacity:0;transform:translateY(26px) scale(.985)}to{opacity:1;transform:none}}
+.module-title{display:flex;align-items:center;gap:12px;margin-bottom:16px;font:800 14px/1.2 var(--og-display);letter-spacing:.14em;text-transform:uppercase;color:#fff;text-shadow:0 0 14px rgba(139,92,246,.7)}
+.module-title svg{flex:0 0 auto;width:30px;height:30px;padding:5px;fill:var(--og-warn);background:rgba(255,107,138,.12);border:1px solid rgba(255,107,138,.55);
+  clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
+.error-sub{display:block;padding:16px 18px;font:600 17px/1.6 var(--og-body);letter-spacing:.03em;color:#d9defa;background:rgba(7,8,19,.72);border:1px solid rgba(139,92,246,.38);border-radius:8px;animation:ogRise .5s ease-out .3s both}
+.error-sub strong{display:inline-block;padding:1px 10px;margin:0 2px;font:700 14px/1.5 'Courier New',monospace;letter-spacing:.04em;color:var(--og-cyan);background:rgba(69,233,247,.1);border:1px solid rgba(69,233,247,.45);
+  box-shadow:0 0 14px rgba(69,233,247,.2);clip-path:polygon(5px 0,100% 0,100% calc(100% - 5px),calc(100% - 5px) 100%,0 100%,0 5px)}
+
+/* ---------- footer ---------- */
+.omid-brand-footer{position:relative;z-index:2;padding:22px 8px 4px;text-align:center;font:600 11px/2 var(--og-display);letter-spacing:.12em;text-transform:uppercase;color:var(--og-muted);animation:ogRise .8s ease-out .6s both}
+.omid-brand-footer span{color:var(--og-pink)}
+.omid-brand-footer a{color:var(--og-cyan);text-decoration:none;font-weight:700;transition:color .2s,text-shadow .2s}
+.omid-brand-footer a:hover{color:#fff;text-shadow:0 0 12px var(--og-cyan)}
+::selection{background:rgba(139,92,246,.55);color:#fff}
+
+/* ---------- light theme (Arctic Mint) ---------- */
+html:not(.dark-mode) .header,html:not(.dark-mode) .module{color:#203b3a;background:linear-gradient(142deg,rgba(255,255,255,.82),rgba(239,250,247,.70));
+  border:1px solid rgba(91,173,162,.26);box-shadow:0 16px 38px rgba(39,103,96,.12),0 3px 10px rgba(57,121,114,.06),inset 0 1px 0 rgba(255,255,255,.92);
+  -webkit-backdrop-filter:blur(24px) saturate(145%);backdrop-filter:blur(24px) saturate(145%)}
+html:not(.dark-mode) .header{clip-path:none;border-top:3px solid rgba(14,159,166,.72);border-radius:20px}
+html:not(.dark-mode) .header::before,html:not(.dark-mode) .header::after{display:none}
+html:not(.dark-mode) .page-title{background:linear-gradient(120deg,#087f80 0%,#0e9fa6 54%,#487cc7 100%);-webkit-background-clip:text;background-clip:text;filter:none}
+html:not(.dark-mode) .og-core{filter:drop-shadow(0 0 10px rgba(14,159,166,.5))}
+html:not(.dark-mode) .og-tag{color:#607a78}
+html:not(.dark-mode) .og-boot{color:#0d827f}
+html:not(.dark-mode) .omid-brand-meta{color:#397b77}
+html:not(.dark-mode) .omid-brand-meta span{color:#0e9fa6}
+html:not(.dark-mode) .og-live{color:#d6336c;background:rgba(214,51,108,.08);border-color:rgba(214,51,108,.45)}
+html:not(.dark-mode) .og-live i{background:#d6336c;box-shadow:0 0 8px #d6336c}
+html:not(.dark-mode) .og-ticker{background:rgba(255,255,255,.5)}
+html:not(.dark-mode) .module-title{color:#254744;text-shadow:none}
+html:not(.dark-mode) .module-title svg{fill:#d6336c;background:rgba(214,51,108,.08);border-color:rgba(214,51,108,.4)}
+html:not(.dark-mode) .error-sub{color:#294946;background:rgba(255,255,255,.7);border-color:rgba(13,148,136,.24);box-shadow:inset 0 1px 2px rgba(39,103,96,.04)}
+html:not(.dark-mode) .error-sub strong{color:#087f80;background:rgba(14,159,166,.1);border-color:rgba(14,159,166,.4);box-shadow:none}
+html:not(.dark-mode) .omid-brand-footer{color:#607a78}
+html:not(.dark-mode) .omid-brand-footer a{color:#087f80}
+html:not(.dark-mode) .omid-brand-footer a:hover{color:#0d9488;text-shadow:none}
+
+/* ---------- responsive ---------- */
+@media(max-width:700px){
+  .card-container{padding:18px 14px}
+  .header{flex-direction:column;align-items:center;text-align:center;gap:14px;padding:20px 16px}
+  .header-title{flex:0 0 auto}
+  .og-eyebrow{justify-content:center}
+  .og-core{width:72px;height:72px}
+  .module{padding:18px 16px}
+}
+@media(max-width:480px){.page-wrapper{padding:12px}}
+@media(max-height:600px) and (orientation:landscape){.page-wrapper{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){
+  #ogFx .og-floor,.og-core *,.og-track,.header::after,.page-title::after,.module,.card-container,.card-container::before,.og-live i,.error-sub,.omid-brand-footer{animation:none !important}
+}
+@media(prefers-reduced-transparency:reduce){.card-container,.header,.module{-webkit-backdrop-filter:none;backdrop-filter:none}}
+</style>
+<link rel="icon" type="image/svg+xml" sizes="any" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0Ij4KPGRlZnM+CiA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iIzE1MTMzMSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzA4MGQyMCIvPjwvbGluZWFyR3JhZGllbnQ+CiA8bGluZWFyR3JhZGllbnQgaWQ9Im5lb24iIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjYmI2M2ZmIi8+PHN0b3Agb2Zmc2V0PSIuNTIiIHN0b3AtY29sb3I9IiM2ZDc0ZmYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM0NWU5ZjciLz48L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+CjxyZWN0IHg9IjIiIHk9IjIiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcng9IjE3IiBmaWxsPSJ1cmwoI2JnKSIgc3Ryb2tlPSJ1cmwoI25lb24pIiBzdHJva2Utd2lkdGg9IjMiLz4KPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMTgiIGZpbGw9Im5vbmUiIHN0cm9rZT0idXJsKCNuZW9uKSIgc3Ryb2tlLXdpZHRoPSI1Ii8+CjxwYXRoIGQ9Ik0zNS41IDE3LjUgMjIuNyAzNC4yaDkuMWwtMy4xIDEyLjQgMTMuMS0xOGgtOS4zeiIgZmlsbD0iI2Y0ZmRmZiIgc3Ryb2tlPSIjZjRmZGZmIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9Ii41Ii8+Cjwvc3ZnPg==">
+</head>
+<body>
+<div id="ogFx" aria-hidden="true"><div class="og-bg"></div><div class="og-floor"></div><div class="og-scan"></div><div class="og-vig"></div></div>
+<div class="page-wrapper">
+<div class="card-container">
+<div class="header">
+<div class="og-core" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><linearGradient id="ogG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset=".55" stop-color="#ff4fd8"/><stop offset="1" stop-color="#45e9f7"/></linearGradient><radialGradient id="ogC" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#8b5cf6" stop-opacity=".55"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></radialGradient></defs><circle cx="60" cy="60" r="56" fill="url(#ogC)"/><g class="r1"><circle cx="60" cy="60" r="54" fill="none" stroke="#8b5cf6" stroke-width="1.6" stroke-dasharray="6 9"/></g><g class="r2"><circle cx="60" cy="60" r="44" fill="none" stroke="#45e9f7" stroke-width="1.4" stroke-dasharray="30 12 4 12"/></g><g class="r3"><circle cx="60" cy="60" r="34" fill="none" stroke="#ff4fd8" stroke-width="1.2" stroke-dasharray="2 8"/></g><path class="bolt" d="M66 22 40 66h18l-6 32 30-48H64z" fill="url(#ogG)" stroke="#fff" stroke-opacity=".5" stroke-width="1"/></svg></div>
+<div class="header-title">
+<div class="og-eyebrow"><span class="og-live"><i></i>ERROR</span><span class="og-tag">Configuration</span></div>
+<h1 class="page-title" id="pageTitle" data-og="Administrator password is not set">Administrator password is not set</h1>
+<p class="omid-brand-meta">Omid Edge Panel <span aria-hidden="true">•</span> Free For All</p>
+<div class="og-boot" id="ogBoot" data-text="> action: set ADMIN variable"></div>
+</div>
+</div>
+<div class="og-ticker" aria-hidden="true"><div class="og-track"><span><b>Omid Edge Panel</b></span><span>Free for all</span><span><em>◆</em></span><span>Setup required</span><span><em>◆</em></span><span>Edge-grade routing</span><span><em>◆</em></span><span>Smart subscriptions</span><span><em>◆</em></span><span>Zero downtime</span><span><em>◆</em></span><span><b>Omid Edge Panel</b></span><span>Free for all</span><span><em>◆</em></span><span>Setup required</span><span><em>◆</em></span><span>Edge-grade routing</span><span><em>◆</em></span><span>Smart subscriptions</span><span><em>◆</em></span><span>Zero downtime</span><span><em>◆</em></span></div></div>
+<div class="module">
+<div class="module-title"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"></path></svg>Action required</div>
+<span class="error-sub">Set the environment variable <strong>ADMIN</strong> to</span>
+</div>
+<footer class="omid-brand-footer">Omid Edge Panel <span aria-hidden="true">•</span> Free For All <span aria-hidden="true">•</span> Developed by <a href="https://github.com/omidiran-gaming/Omid-Edge-Panel" target="_blank" rel="noopener noreferrer">OMIDIRAN</a> <span aria-hidden="true">•</span> <a href="https://t.me/omid_gamingORG" target="_blank" rel="noopener noreferrer">Telegram</a> <span aria-hidden="true">•</span> <a href="https://www.youtube.com/@omid_Gaming" target="_blank" rel="noopener noreferrer">YouTube</a></footer>
+</div>
+</div>
+<script>
+(function(){
+  try{
+    var core=document.querySelector('.og-core'),boot=document.getElementById('ogBoot');
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(core&&!reduce&&window.matchMedia('(pointer:fine)').matches){
+      var raf=0;
+      document.addEventListener('mousemove',function(e){
+        if(raf)return;
+        raf=requestAnimationFrame(function(){
+          raf=0;
+          var x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;
+          core.style.transform='perspective(500px) rotateY('+(x*28).toFixed(1)+'deg) rotateX('+(-y*28).toFixed(1)+'deg)';
+        });
+      },{passive:true});
+    }
+    if(boot){
+      var lines=['> booting edge core ...','> config check: failed',boot.getAttribute('data-text')];
+      if(reduce){boot.textContent=lines[2];}
+      else{
+        var li=0,ci=0;
+        (function step(){
+          var s=lines[li];
+          if(ci<=s.length){boot.textContent=s.slice(0,ci++);setTimeout(step,28+Math.random()*30);}
+          else if(li<lines.length-1){li++;ci=0;setTimeout(step,650);}
+        })();
+      }
+    }
+  }catch(err){}
+})();
+</script>
+</body>
+</html>

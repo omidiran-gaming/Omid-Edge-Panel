@@ -1,0 +1,329 @@
+# Omid Edge Panel — Graphical UI Refresh (2026-10-16)
+
+- Updated the root landing page to the latest gaming-inspired platform design.
+- Updated the Persian login page and both configuration-error pages with the shared neon/HUD visual system.
+- Updated the admin dashboard UI using the supplied full dashboard HTML.
+- Synchronized the HTML assets with the bundled pages embedded in `_worker.js` for standalone Worker deployments.
+- Backend routing and API handler logic were left unchanged by this UI refresh.
+
+# Omid Edge Panel — Platform Ecosystem Landing Page (2026-10-16)
+
+- Rebuilt the root landing page with a platform-first layout and a single primary panel-entry button.
+- Added distinct sections for Cloudflare Workers, Cloudflare Pages, GitHub, GitHub Actions, Telegram, and YouTube.
+- Preserved existing Worker routes and backend behavior while updating only the landing-page HTML.
+
+# Omid Edge Panel — Login Session Compatibility Fix (2026-10-16)
+
+- Made the `auth` cookie derivation consistent across login and admin requests; it no longer depends on the User-Agent string.
+- This fixes a possible login-success / redirect-back-to-login loop when the User-Agent differs between requests.
+
+# Omid Edge Panel — Standalone Worker UI Fix (2026-10-16)
+
+- Changed the standalone Worker frontend fallback from the original upstream Pages site to the branded `omidiran35-bwv.pages.dev` deployment.
+- Ignores a stale `PAGES_URL` value that points directly to `edt-pages.github.io`, while retaining support for an explicitly configured custom Pages frontend.
+
+- Added a branded neon OMID-IRAN favicon to the landing page, admin dashboard, login, and configuration pages.
+- Network information cards now resolve flags from full country names as well as ISO country codes.
+# Omid Edge Panel — Config naming update (2026-10-15)
+
+- Branded generated ordinary links as `🟢 OMID-IRAN | ALL NN`, ECH links as `🔵 OMID-IRAN | MCI-TCI NN`, and FinalMask + Cipher Suites links as `🟡 OMID-IRAN | MTN-RTL NN`. Each group has its own two-digit sequence.
+- FinalMask + Cipher Suites links use the `fp=unsafe` fingerprint.
+
+---
+
+# Omid Edge Panel — Maintenance Update (2026-10-15)
+
+- Translated the upstream Changelog entries into English while preserving version numbers and source links.
+- Replaced the CARTO basemap that returned API-key errors with OpenStreetMap tiles and visible attribution.
+
+---
+
+Omid Edge Panel maintenance update (2026-10-15): translated full upstream changelog entries into English and replaced the API-key-restricted map tiles with public OpenStreetMap tiles.
+## OmidIR Branding Edition - 2026-10-14
+
+### Branding
+
+- Applied Omid Edge Panel / OmidIR visual branding and the “Free For All” tagline.
+- Added branded login, admin, and configuration-error page footers.
+- Set the default subscription name to `OMID-IRAN`.
+- Added the OMIDIRAN GitHub, Telegram, and YouTube links.
+- Introduced a navy-and-purple glass-style theme with a dark first-visit default.
+- Preserved the upstream LICENSE, source attribution, protocol identifiers, and operational service endpoints.
+
+---
+
+## [2.1.20261008222327] - 2026-10-08 22:23:27
+
+### Debug
+
+- Fixed the 1101 error.
+
+## [2.1.20260923155300] - 2026-09-23 15:53:00
+
+### Debug
+
+- Fixed local identifier handling: unified header and query-key lookup to keep XHTTP padding, gRPC detection, and preferred-IP requests consistent.
+- Improved preferred-IP requests by adding the local identifier to User-Agent headers for the preferred-IP API, subscription generator, and subscription conversion requests.
+
+### Change
+
+- Improved version detection: the version endpoint consistently returns a numeric version.
+- Improved subscription requests by adding the current version to User-Agent headers so servers can identify the client version.
+
+## [2.1.20260922200117] - 2026-09-22 20:01:17
+
+### Debug
+
+- Fixed aggregated subscriptions by standardizing the User-Agent.
+
+## [2.1.20260907040834] - 2026-09-07 04:08:34
+
+### ADD
+
+- Added an option to expand all subscription-conversion rules.
+
+## [2.1.20260904162413] - 2026-09-04 16:24:13
+
+### ADD
+
+- Added ALPN field support; node links now include the ALPN parameter automatically for broader client compatibility.
+
+### Debug
+
+- Fixed HTTPS proxy handshakes when an upstream requests a client certificate (`CertificateRequest`); an empty certificate is now returned to complete the handshake. [Commit](https://github.com/cmliu/CF-Workers-CheckSocks5/commit/ae93bc28462a6df03795143a5caa85f717ba231a)
+
+## [2.1.20260811144522] - 2026-08-11 14:45:22
+
+### Change
+
+- Optimized XHTTP uploads by batching small chunks before sending, reducing frequent writes and resource overhead and improving large-file uploads.
+
+## [2.1.20260810030901] - 2026-08-10 03:09:01
+
+### ADD
+
+- Added receiver support for XHTTP obfuscation padding headers using `xPaddingObfsMode` (tokenish / queryInHeader).
+
+## [2.1.20260809231057] - 2026-08-09 23:10:57
+
+### Debug
+
+- Fixed XHTTP chained-proxy parsing to accept trailing slashes in paths.
+
+## [2.1.20260809201158] - 2026-08-09 20:11:58
+
+### Change
+
+- Optimized the XHTTP data path: TCP data now flows directly in both directions through `request.body.pipeTo(socket.writable)` and `socket.readable.pipeTo(IdentityTransformStream)`, bypassing intermediate stream queues and per-chunk BYOB/Grain handling to reduce CPU usage.
+- Improved XHTTP connection management: `forwardataTCP` can now establish a connection and write the first packet before returning the socket for direct piping, while retaining the reverse-proxy fallback if direct dialing fails. gRPC and WebSocket callers are unaffected.
+- Refactored XHTTP UDP handling into a dedicated branch while preserving Trojan UDP reverse-proxy and DNS-forwarding behavior.
+
+## [2.1.20260729235734] - 2026-07-29 23:57:34
+
+### Change
+
+- Corrected `PRELOAD_RACE_DIAL`: the default is now `false`; set `1` or `true` to enable preloaded race dialing. Updated the README accordingly. [Commit](https://github.com/cmliu/edgetunnel/commit/aea8b85688ef6066116af551cfd5e6fd2ce77567)
+
+## [2.1.20260724150359] - 2026-07-24 15:03:59
+
+### Change
+
+- Synced the latest GrainTCP transport improvements: increased the upload batching target from `16KB` to `20KB` and reused the shared batching core to reduce frequent `writer.write()` calls. [Upstream commit](https://github.com/ToiCF/GrainTCP/commit/1d22628f4d1413989f521f1d41591b0c72e658eb)
+- Optimized downstream GrainTCP batching with a `32KB` cap, low-watermark checks, and timely flushes to reduce small WebSocket frames. [Upstream commit](https://github.com/ToiCF/GrainTCP/commit/1d22628f4d1413989f521f1d41591b0c72e658eb)
+- Optimized downstream packet handling to send large chunks directly and copy aggregated results before sending, preventing reusable-buffer corruption. [Upstream commit](https://github.com/ToiCF/GrainTCP/commit/1d22628f4d1413989f521f1d41591b0c72e658eb)
+- Enhanced TCP connection management using connection generations, socket identity, and drain barriers to keep asynchronous cleanup from affecting replacement connections. [Upstream reference](https://github.com/ToiCF/GrainTCP/commit/1d22628f4d1413989f521f1d41591b0c72e658eb)
+- Unified direct, segmented, and timed-flush sends into a serial send chain and preserved async send errors; response headers are consumed only on the first real send. [Upstream reference](https://github.com/ToiCF/GrainTCP/commit/1d22628f4d1413989f521f1d41591b0c72e658eb)
+- Preserved multi-protocol compatibility and bounded the local upload queue at `16MiB / 4096` entries to prevent unbounded queue growth. [Upstream change](https://github.com/ToiCF/GrainTCP/commit/1d22628f4d1413989f521f1d41591b0c72e658eb)
+- Local speed-test responses now apply only in reverse-proxy mode; SOCKS5/HTTP/HTTPS/TURN/SSTP proxies forward speed-test requests normally.
+
+## [2.1.20260722191426] - 2026-07-22 19:14:26
+
+### Change
+
+- Added support for the real connection test URL `http://cp.cloudflare.com/generate_204`.
+
+## [2.1.20260711190235] - 2026-07-11 19:02:35
+
+### ADD
+
+- Added the `TCP_CONCURRENT_DIAL` environment variable to customize concurrent TCP dials; when set, the value is no longer reduced automatically for China Mobile.
+- Added the `PROXY_CONCURRENT_DIAL` environment variable to customize concurrent proxy dials.
+
+## [2.1.20260711022318] - 2026-07-11 02:23:18
+
+### Change
+
+- Improved reverse-proxy handling to prevent parameters for multiple proxy nodes from being overwritten by global variables.
+- Improved DoH caching by temporarily caching recent positive and negative DNS lookups to reduce repeat requests and resource use.
+
+### ADD
+
+- Added configurable concurrent proxy dials. Higher values may improve connection speed but can switch IPs more often; lower values may improve stability.
+- Added subscription-conversion options for UDP, XUDP, TLS 1.3, appending node type, and basic node sorting, and forwards them to the conversion backend.
+- Added Trojan fallback proxy support. A backup proxy can be configured and used automatically when the primary connection fails.[PR #1359](https://github.com/cmliu/edgetunnel/pull/1359)
+
+## [2.1.20260617014121] - 2026-06-17 01:41:21
+
+### ADD
+
+- Added an option to output node information only in subscription conversion settings.
+
+## [2.1.20260611041617] - 2026-06-11 04:16:17
+
+### Change
+
+- Improved UUID validation in the version-information endpoint.
+
+## [2.1.20260609132903] - 2026-06-09 13:29:03
+
+### Debug
+
+- Fixed the Cloudflare 1101 error signature.
+
+### Change
+
+- Improved PROXYIP DNS caching by normalizing proxy addresses to lowercase before cache comparison.
+
+## [2.1.20260601154939] - 2026-06-01 15:49:39
+
+### Change
+
+- Adapted to Xray-core v26.2.6: TLS no longer uses `allowInsecure`; Base64 subscriptions no longer include a skip-certificate-verification option. Clash and Sing-box subscriptions are unaffected. [Release](https://github.com/XTLS/Xray-core/releases/tag/v26.2.6)
+
+## [2.1.20260529014818] - 2026-05-29 01:48:18
+
+### Change
+
+- Reduced direct TCP dial concurrency to one route on China Mobile networks to reduce CPU timeouts.
+
+## [2.1.20260526210857] - 2026-05-26 21:08:57
+
+### Debug
+
+- Fixed TURN authentication to allow an empty `REALM` in STUN challenges.
+
+## [2.1.20260518183745] - 2026-05-18 18:37:45
+
+### ADD
+
+- Added `PRELOAD_RACE_DIAL` to control preloaded TCP race dialing. First connections can query A/AAAA records concurrently over DoH, prefer IPv4, and use IPv6 to fill the configured dial limit.
+
+## [2.1.20260517185203] - 2026-05-17 18:52:03
+
+### Debug
+
+- Fixed WS/XHTTP/gRPC uploads by waiting for remote writes before processing the next chunk, preventing upload queue overflow.
+- Improved the WS upload queue guard to `16MB / 4096` entries and correctly release pending writes during cleanup.
+
+## [2.1.20260515185129] - 2026-05-15 18:51:29
+
+### Change
+
+- Improved Shadowsocks subscriptions: when TLS is disabled, the preferred port is rewritten to the no-TLS port. This does not apply to reverse-proxy IPs.
+- Changed `GO2SOCKS5` from replacement mode to append mode. [PR #1202](https://github.com/cmliu/edgetunnel/pull/1202)
+
+## [2.1.20260513042803] - 2026-05-13 04:28:03
+
+### Change
+
+- Optimized the VLESS hot path by pre-decoding UUIDs into 16-byte values and reducing copies when parsing initial packets. [Open-source reference](https://github.com/ToiCF/GrainTCP)
+- Improved WS Early Data with an 8KB limit and prevented ordinary WebSocket subprotocols from being injected as early data. [Open-source reference](https://github.com/ToiCF/GrainTCP)
+- Improved WS/XHTTP/gRPC uploads with bounded queues, small-packet batching, and 256KB backpressure protection. [Open-source reference](https://github.com/ToiCF/GrainTCP)
+- Optimized downstream GrainTCP sends by batching small packets and sending large packets directly after flushing the aggregator. [Open-source reference](https://github.com/ToiCF/GrainTCP)
+- Optimized TCP connection setup with four parallel direct/proxy-IP dial candidates while retaining existing proxy handshake logic. [Open-source reference](https://github.com/ToiCF/GrainTCP)
+- Improved WebSocket handshakes and transport ordering, added an `allowHalfOpen` fallback, and cleared `Sec-WebSocket-Extensions` from 101 responses. [Open-source reference](https://github.com/ToiCF/GrainTCP)
+
+## [2.1.20260511041705] - 2026-05-11 04:17:05
+
+### Change
+
+- Improved password validation on the login settings page to handle newline characters in the `ADMIN` password.
+
+### Delete
+
+- Removed the request-count refresh countdown from subscription response headers to reduce confusion for new users.
+
+## [2.1.20260508190728] - 2026-05-08 19:07:28
+
+### Debug
+
+- Fixed missing carrier information after subscription conversion in random preferred-IP mode.
+
+### Change
+
+- Improved subscription conversion by using a temporary `TOKEN` to avoid exposing the real subscription URL.
+
+## [2.1.20260508041513] - 2026-05-08 04:15:13
+
+### Change
+
+- Improved PROXYIP domain resolution by checking TXT records first and falling back to A records.
+- Query AAAA records only when neither TXT nor A records return results, reducing unnecessary IPv6 lookups.
+
+### Delete
+
+- Removed the special case for `.william` domains and the Google DoH retry fallback; ordinary domains can now configure proxy addresses through TXT records.
+
+## [2.1.20260506175102] - 2026-05-06 17:51:02
+
+### New
+
+- Added TURN proxy support in reverse-proxy mode. [Open-source reference](https://github.com/ToiCF/CF-Workers-TURN)
+- Added SSTP (SoftEther) proxy support in reverse-proxy mode. [Open-source reference](https://github.com/ToiCF/CF-Workers-SoftEther)
+- Added chain-proxy nodes to custom subscriptions.
+
+## [2.1.20260503011925] - 2026-05-03 01:19:25
+
+### Change
+
+- Added Sing-box support for a custom ECHConfig resolution domain.
+- Added wildcard preferred-domain support for custom subscriptions.
+
+### Delete
+
+- Removed the fallback DoH resolver for ECHConfig DNS in Clash.
+
+## [2.1.20260417015756] - 2026-04-17 01:57:56
+
+### Debug
+
+- Synced upstream updates and fixed a known HTTPS proxy issue. [Reference](https://t.me/Enkelte_notif/824)
+- Fixed known issues [#1117](https://github.com/cmliu/edgetunnel/issues/1117) [#1119](https://github.com/cmliu/edgetunnel/issues/1119) [#1120](https://github.com/cmliu/edgetunnel/issues/1120)
+
+## [2.1.20260416044724] - 2026-04-16 04:47:24
+
+### New
+
+- Trojan now supports DNS queries over UDP-over-TCP.
+- Added HTTPS proxy support in reverse-proxy mode. [Open-source reference](https://github.com/ToiCF/CF-Workers-HTTPS)
+
+## [2.1.20260413174651] - 2026-04-13 17:46:51
+
+### Change
+
+- Optimized WebSocket data transfer with BYOB support for better performance and flexibility.
+
+## [2.1.20260410060317] - 2026-04-10 06:03:17
+
+### New
+
+- Added AEAD encryption for Shadowsocks, providing payload encryption for non-TLS transport modes.
+
+## [2.1.0]
+
+### New
+- Added support for XHTTP and gRPC transports for VLESS and Trojan.
+
+## [2.0.0]
+
+### New
+
+- Completely rewrote the project architecture and added a web frontend. [Frontend source](https://github.com/EDT-Pages/EDT-Pages.github.io)
+[Stage 12 — Ultra Premium Home]
+- Replaced the plain nginx welcome page with the English OMID EDGE PANEL landing page.
+- Added responsive Ultra Premium visuals, animated edge-core illustration, feature cards, About section, and GitHub/Panel/Telegram entry points.
+- Root Worker route handles ordinary GET/HEAD requests at `/` only and explicitly skips WebSocket upgrades; existing non-root routing remains unchanged.
+## 2026-10-15 - Network location lookup fix
+- Updated IP metadata parsing for the current anonymous ipapi.is response schema (`country`, `asn`, `company`).
+- Added a sequential geolocation fallback for IPs not covered by the existing metadata service, including IPv6 lookups.
+- Corrected country-flag parsing so `AS` inside an ASN label is not mistaken for a country code.

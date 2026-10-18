@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "data": [
+    "172.67.171.1:8443#CF Preferred 169ms 21.19MB/s",
+    "104.16.12.247:8443#CF Preferred 101.98ms 21.19MB/s",
+    "172.66.45.55:8443#CF Preferred 167.67ms 21.18MB/s",
+    "172.67.165.216:8443#CF Preferred 168.94ms 21.1MB/s",
+    "104.21.18.93:8443#CF Preferred 170.63ms 21.1MB/s",
+    "172.67.195.73:8443#CF Preferred 167.99ms 21.09MB/s",
+    "104.18.1.9:8443#CF Preferred 169.45ms 21.08MB/s",
+    "172.67.194.48:8443#CF Preferred 172.88ms 21.07MB/s",
+    "104.21.17.120:8443#CF Preferred 168.17ms 21.06MB/s",
+    "104.18.12.110:8443#CF Preferred 168.02ms 21.05MB/s",
+    "172.67.193.74:8443#CF Preferred 172.65ms 21.02MB/s",
+    "104.17.236.50:8443#CF Preferred 168.9ms 21.02MB/s",
+    "104.17.233.65:8443#CF Preferred 170.32ms 21.01MB/s",
+    "104.17.25.48:8443#CF Preferred 172.81ms 21.01MB/s",
+    "104.18.11.39:8443#CF Preferred 169.84ms 21MB/s",
+    "104.18.8.223:8443#CF Preferred 170.04ms 20.99MB/s",
+    "104.16.41.74:8443#CF Preferred 168.62ms 20.99MB/s",
+    "104.17.31.225:8443#CF Preferred 168.29ms 20.98MB/s",
+    "104.16.9.245:8443#CF Preferred 35.28ms 20.97MB/s",
+    "104.18.186.238:8443#CF Preferred 169.43ms 20.97MB/s",
+    "172.67.79.244:8443#CF Preferred 171.65ms 20.97MB/s",
+    "172.67.162.242:8443#CF Preferred 171.89ms 20.96MB/s",
+    "172.67.199.26:8443#CF Preferred 171.09ms 20.95MB/s"
+  ]
+}

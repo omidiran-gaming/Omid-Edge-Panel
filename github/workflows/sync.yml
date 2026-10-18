@@ -1,0 +1,44 @@
+name: Upstream Sync
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # every day
+  workflow_dispatch:
+
+jobs:
+  sync_latest_from_upstream:
+    name: Sync latest commits from upstream repo
+    runs-on: ubuntu-latest
+    if: ${{ github.event.repository.fork }}
+
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Sync upstream changes
+        run: |
+          git config user.name "GH Action - Upstream Sync"
+          git config user.email "action@github.com"
+
+          git remote add upstream https://github.com/cmliu/edgetunnel.git
+          git fetch upstream main
+
+          if git diff --quiet HEAD upstream/main; then
+            # Content matches upstream; align directly and clean up redundant merge commits from historical divergence
+            git reset --hard upstream/main
+            git push --force-with-lease origin main
+          else
+            # Local changes exist; keep the existing merge strategy and do not overwrite changes
+            if ! git pull --no-rebase upstream main; then
+              echo "[Error] Upstream merge conflicts detected. Automatic sync is paused; sync the fork manually and resolve conflicts."
+              echo "[Error] Merge conflict detected while syncing upstream. Please sync your fork manually and resolve the conflicts."
+              exit 1
+            fi
+            git push origin main
+          fi
